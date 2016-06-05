@@ -1,0 +1,68 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="HelloWorldAssessment.*" import="java.sql.ResultSet"
+    import="java.sql.Statement" import="java.sql.*" import="java.sql.DriverManager"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+	Connection adminSiteConnection = null;
+	String username = "root";
+	String password = "VM0xQqe1l6";
+	String connectionURL = "jdbc:mysql://mysql12913-RegisteredUserReport.dal.jelastic.vps-host.net/HelloWorldRegistrationAssessment";
+	
+	try {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+	} catch (InstantiationException | IllegalAccessException e) {
+		e.printStackTrace();
+	}
+	
+	adminSiteConnection = DriverManager.getConnection(connectionURL, username, password);
+	
+	UserInformation user = new UserInformation();
+	if(adminSiteConnection == null)
+	{
+		System.out.println("NULL");
+	}
+	
+	Statement stmt = adminSiteConnection.createStatement();
+	ResultSet rs = stmt.executeQuery("select * from registereduserreport order by Date DESC");
+	
+%>
+	<table border="1">
+	<tr>
+	<td>First Name </td>
+	<td>Last Name </td>
+	<td>Address1 </td>
+	<td>Address2 </td>
+	<td>City </td>
+	<td>State </td>
+	<td>Zip </td>
+	<td>Country (US Only) </td>
+	<td>Date </td>
+	</tr>
+<%
+	while(rs.next()) { %>
+	<tr>
+	<td><% out.println(rs.getString("FirstName")); %></td>
+	<td><% out.println(rs.getString("LastName")); %></td>
+	<td><% out.println(rs.getString("Address1")); %></td>
+	<td><% out.println(rs.getString("Address2")); %></td>
+	<td><% out.println(rs.getString("City")); %></td>
+	<td><% out.println(rs.getString("State")); %></td>
+	<td><% out.println(rs.getString("Zip")); %></td>
+	<td><% out.println(rs.getString("Country")); %></td>
+	<td><% out.println(rs.getString("Date")); %></td>
+	</tr>
+	<%} %>			
+</table>
+<%
+adminSiteConnection.close();
+adminSiteConnection = null;
+%>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="HelloWorldAssessment.*" import="java.sql.ResultSet"
+    import="java.sql.Statement" import="java.sql.*" import="java.sql.DriverManager" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+Registration Complete. You may now close your browser.
+<%
+
+	Connection conn3 = null;
+//	String username2 = "root";
+//	String password2 = "VM0xQqe1l6";
+//	String connection2URL = "jdbc:mysql://mysql12913-RegisteredUserReport.dal.jelastic.vps-host.net/HelloWorldRegistrationAssessment";
+
+	String username3 = "root";
+	String password3 = "C1nd3r3ll4";
+	String connection3URL = "jdbc:mysql://localhost:3306/HelloWorldAssessment";
+
+	
+	try {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+	} catch (InstantiationException | IllegalAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	conn3 = DriverManager.getConnection(connection3URL, username3, password3);
+	
+	UserInformation user = new UserInformation();
+	Statement stmt = conn3.createStatement();
+	ResultSet rs = stmt.executeQuery("select * from registereduserreport");
+	if(rs == null)
+	{
+		System.out.println(rs.getString(1));
+	}
+	
+%>
+	<table>
+	<tr>
+
+	</tr>			
+</table>
+<%
+conn3.close();
+conn3 = null;
+%>
+
+
+
+</body>
+</html>
